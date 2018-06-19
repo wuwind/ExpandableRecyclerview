@@ -1,13 +1,8 @@
 apply plugin: 'com.android.library'
-apply plugin: 'com.novoda.bintray-release'
-publish {
-    userOrg = 'wuwind'      //bintray注册的用户名
-    groupId = 'com.wuwind'         //compile引用时的第1部分groupId
-    artifactId = 'expandablerecyclerview'     //compile引用时的第2部分项目名
-    publishVersion = '1.0.0'    //compile引用时的第3部分版本号
-    desc = 'This is a expandablerecyclerview'
-    website = 'https://github.com/wuwind'
-}
+
+apply plugin: 'com.github.dcendents.android-maven'
+
+group='com.github.wuwind'
 
 android {
     compileSdkVersion 27
