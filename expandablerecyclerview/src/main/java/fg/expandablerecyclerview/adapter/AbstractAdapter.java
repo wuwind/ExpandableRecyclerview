@@ -21,6 +21,7 @@ public abstract class AbstractAdapter extends RecyclerView.Adapter implements Ab
     AdapterItemUtil adapterItemUtil = new AdapterItemUtil();
     //显示的数据集
     private List<ExpandableBean> mDataList;
+    private List<ExpandableBean> mDataSource;
     private Class mItemType;
     private boolean isExpandAll;
 
@@ -33,12 +34,64 @@ public abstract class AbstractAdapter extends RecyclerView.Adapter implements Ab
     }
 
     public void setDatas(List<ExpandableBean> dataList, boolean isExpandAll) {
-        this.mDataList = dataList;
-        this.isExpandAll = isExpandAll;
-        if (isExpandAll) {
-            checkExpandAll(new ArrayList<>(mDataList));
+        mDataSource = dataList;
+        if(null == mDataList)
+            mDataList = new ArrayList<>();
+        mDataList.clear();
+        if(null != mDataSource) {
+            mDataList.addAll(mDataSource);
+            this.isExpandAll = isExpandAll;
+            if (isExpandAll) {
+                checkExpandAll(new ArrayList<>(mDataList));
+            }
         }
         notifyDataSetChanged();
+    }
+
+    public int removeAndNotify(ExpandableBean bean) {
+        int pos = remove(bean);
+        if (pos >= 0)
+            notifyItemRemoved(pos);
+        return pos;
+    }
+
+    public int remove(ExpandableBean bean) {
+        int pos = -1;
+        if (null == bean)
+            return pos;
+        ExpandableBean parent = bean.getParent();
+        if (null != parent) {
+            List expandableItemList = parent.getExpandableItemList();
+            if (null != expandableItemList)
+                expandableItemList.remove(bean);
+        }
+        pos = mDataList.indexOf(bean);
+        mDataList.remove(pos);
+        return pos;
+    }
+
+    public int addAndNotify(ExpandableBean bean) {
+        int pos = add(bean);
+        if (pos >= 0)
+            notifyItemInserted(pos);
+        return pos;
+    }
+
+    public int add(ExpandableBean bean) {
+        int pos = -1;
+        if (null == bean)
+            return pos;
+        ExpandableBean parent = bean.getParent();
+        if (null != parent) {
+            List expandableItemList = parent.getExpandableItemList();
+            expandableItemList.add(bean);
+            pos = mDataList.indexOf(parent) + expandableItemList.size();
+            mDataList.add(pos, bean);
+        } else {
+            mDataList.add(bean);
+            pos = mDataList.size();
+        }
+        return pos;
     }
 
     private void checkExpandAll(List<ExpandableBean> dataList) {
@@ -57,6 +110,7 @@ public abstract class AbstractAdapter extends RecyclerView.Adapter implements Ab
         AbstractAdapterView adapterView = null;
         try {
             adapterView = (AbstractAdapterView) mItemType.newInstance();
+            adapterView.setAdapter(this);
         } catch (InstantiationException e) {
             e.printStackTrace();
         } catch (IllegalAccessException e) {
@@ -71,7 +125,7 @@ public abstract class AbstractAdapter extends RecyclerView.Adapter implements Ab
         ExpandableBean expandableItem = mDataList.get(position);
         AbstractAdapterView abstractAdapterView = rcvHolder.getItem();
         abstractAdapterView.setExpandCollapseListener(this);
-        rcvHolder.getItem().onUpdateViews(expandableItem, position);
+        rcvHolder.getItem().onUpdateViews(mDataSource, expandableItem, position);
     }
 
     //该方法只更改itemView的部分信息，不全部刷新
@@ -122,7 +176,7 @@ public abstract class AbstractAdapter extends RecyclerView.Adapter implements Ab
     public void onCollapsed(int position) {
         List<ExpandableBean> removeItems = new ArrayList<>();
         getCollapseDatas(position, removeItems);
-        if(removeItems.isEmpty())
+        if (removeItems.isEmpty())
             return;
         mDataList.removeAll(removeItems);
         notifyItemRangeRemoved(position + 1, removeItems.size());

@@ -17,6 +17,7 @@ public class BaseViewHolder extends RecyclerView.ViewHolder {
         itemView.setClickable(true);
         mItem = item;
         mItem.onBindViews(itemView);
+        mItem.setOnClickListener(itemView);
     }
 
     public AbstractAdapterView<ExpandableBean> getItem() {

@@ -7,22 +7,31 @@ public abstract class ExpandableBean<T> {
     private int position;
 
     private boolean isExpand = false;
+    private ExpandableBean parent;
 
-    public void setExpand(boolean isExpand){
-        this.isExpand = isExpand;
+    public ExpandableBean getParent() {
+        return parent;
     }
 
-    public boolean isExpand(){
+    public void setParent(ExpandableBean parent) {
+        this.parent = parent;
+    }
+
+    public boolean isExpand() {
         return isExpand;
+    }
+
+    public void setExpand(boolean isExpand) {
+        this.isExpand = isExpand;
     }
 
     public abstract List<? extends ExpandableBean> getExpandableItemList();
 
-    public void setPosition(int position){
-        this.position = position;
+    public int getPosition() {
+        return position;
     }
 
-    public int getPosition(){
-        return position;
+    public void setPosition(int position) {
+        this.position = position;
     }
 }
