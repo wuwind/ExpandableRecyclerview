@@ -40,8 +40,14 @@ public class ModeItemView extends AbstractAdapterView<ModeItem> {
                 List<ExpandableBean> datas = getDatas();
                 ModeItem data = getData();
                 int fromPosition = getAdapter().remove(data);
-                data.setParent(data.getParent() == datas.get(0) ? datas.get(1) : datas.get(0));
-                int toPosition = getAdapter().add(data);
+                int index = 0;
+                if(data.getParent() == datas.get(0)) {
+                    data.setParent(datas.get(1));
+                } else {
+                    data.setParent(datas.get(0));
+                    index = -1;
+                }
+                int toPosition = getAdapter().add(index, data);
                 getAdapter().notifyItemMoved(fromPosition, toPosition);
                 v.setEnabled(true);
             }

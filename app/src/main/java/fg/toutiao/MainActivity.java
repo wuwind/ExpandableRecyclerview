@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
         List<ExpandableBean> modes = new ArrayList<>();
         Mode mode = new Mode();
         mode.name = "快捷方式";
-        for (int i = 0; i < 20; i++) {
+        for (int i = 0; i < 10; i++) {
             ModeItem d = new ModeItem();
             d.name = "k家居"+i;
             d.setParent(mode);
@@ -34,12 +34,12 @@ public class MainActivity extends AppCompatActivity {
         modes.add(mode);
         Mode mode2 = new Mode();
         mode2.name = "智能家居";
-        for (int i = 0; i < 30; i++) {
-            ModeItem d = new ModeItem();
-            d.name = "家居"+i;
-            d.setParent(mode2);
-            mode2.modeItems.add(d);
-        }
+//        for (int i = 0; i < 30; i++) {
+//            ModeItem d = new ModeItem();
+//            d.name = "家居"+i;
+//            d.setParent(mode2);
+//            mode2.modeItems.add(d);
+//        }
         modes.add(mode2);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 3);
         gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {

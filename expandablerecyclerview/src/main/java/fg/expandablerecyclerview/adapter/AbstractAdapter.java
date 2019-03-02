@@ -35,10 +35,10 @@ public abstract class AbstractAdapter extends RecyclerView.Adapter implements Ab
 
     public void setDatas(List<ExpandableBean> dataList, boolean isExpandAll) {
         mDataSource = dataList;
-        if(null == mDataList)
+        if (null == mDataList)
             mDataList = new ArrayList<>();
         mDataList.clear();
-        if(null != mDataSource) {
+        if (null != mDataSource) {
             mDataList.addAll(mDataSource);
             this.isExpandAll = isExpandAll;
             if (isExpandAll) {
@@ -71,27 +71,41 @@ public abstract class AbstractAdapter extends RecyclerView.Adapter implements Ab
     }
 
     public int addAndNotify(ExpandableBean bean) {
-        int pos = add(bean);
+        return addAndNotify(-1, bean);
+    }
+
+    public int addAndNotify(int index, ExpandableBean bean) {
+        int pos = add(index, bean);
         if (pos >= 0)
             notifyItemInserted(pos);
         return pos;
     }
 
-    public int add(ExpandableBean bean) {
+    /**
+     * @param bean
+     * @param index ref parent
+     * @return position of view
+     */
+    public int add(int index, ExpandableBean bean) {
         int pos = -1;
         if (null == bean)
             return pos;
         ExpandableBean parent = bean.getParent();
         if (null != parent) {
             List expandableItemList = parent.getExpandableItemList();
-            expandableItemList.add(bean);
-            pos = mDataList.indexOf(parent) + expandableItemList.size();
+            index = (index < 0 || index > expandableItemList.size()) ? expandableItemList.size() : index;
+            expandableItemList.add(index, bean);
+            pos = mDataList.indexOf(parent) + index + 1;
             mDataList.add(pos, bean);
         } else {
-            mDataList.add(bean);
-            pos = mDataList.size();
+            pos = index < 0 || index > mDataList.size() ? mDataList.size() : index;
+            mDataList.add(pos, bean);
         }
         return pos;
+    }
+
+    public int add(ExpandableBean bean) {
+        return add(-1, bean);
     }
 
     private void checkExpandAll(List<ExpandableBean> dataList) {
