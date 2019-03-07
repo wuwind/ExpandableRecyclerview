@@ -1,6 +1,7 @@
 package fg.expandablerecyclerview.view;
 
 import android.support.annotation.LayoutRes;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import java.util.List;
@@ -11,10 +12,23 @@ import fg.expandablerecyclerview.model.ExpandableBean;
 
 public abstract class AbstractAdapterView<T extends ExpandableBean> {
 
+    public RecyclerView.ViewHolder viewHolder;
     private List<ExpandableBean> datas;
     private T expandableItem;
     private ExpandCollapseListener expandCollapseListener;
     private AbstractAdapter adapter;
+
+    public boolean isFix() {
+        return true;
+    }
+
+    public RecyclerView.ViewHolder getViewHolder() {
+        return viewHolder;
+    }
+
+    public void setViewHolder(RecyclerView.ViewHolder viewHolder) {
+        this.viewHolder = viewHolder;
+    }
 
     public AbstractAdapter getAdapter() {
         return adapter;
@@ -89,4 +103,5 @@ public abstract class AbstractAdapterView<T extends ExpandableBean> {
 
         void onCollapsed(int position);
     }
+
 }

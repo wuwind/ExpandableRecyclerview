@@ -8,12 +8,18 @@ public abstract class ExpandableBean<T> {
 
     private boolean isExpand = false;
     private ExpandableBean parent;
+    private ExpandableBean preParent;
+
+    public ExpandableBean getPreParent() {
+        return preParent;
+    }
 
     public ExpandableBean getParent() {
         return parent;
     }
 
     public void setParent(ExpandableBean parent) {
+        preParent = this.parent;
         this.parent = parent;
     }
 

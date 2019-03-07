@@ -13,7 +13,7 @@ import fg.expandablerecyclerview.model.ExpandableBean;
 
 public class ExpandableRecyclerView extends RecyclerView {
 
-    MAdapter mAdapter = new MAdapter();
+    public MAdapter mAdapter = new MAdapter();
 
     public ExpandableRecyclerView(Context context) {
         this(context, null);
@@ -41,9 +41,13 @@ public class ExpandableRecyclerView extends RecyclerView {
         mAdapter.setDatas(mDataList, false);
     }
 
-    class MAdapter extends AbstractAdapter {
+    public class MAdapter extends AbstractAdapter {
         public MAdapter() {
             super(null);
         }
+    }
+
+    public MAdapter getMAdapter() {
+        return mAdapter;
     }
 }

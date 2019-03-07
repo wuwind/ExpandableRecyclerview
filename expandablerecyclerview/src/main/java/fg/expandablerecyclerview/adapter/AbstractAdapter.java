@@ -1,11 +1,14 @@
 package fg.expandablerecyclerview.adapter;
 
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
+import android.util.Log;
 import android.view.ViewGroup;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import fg.expandablerecyclerview.model.ExpandableBean;
@@ -19,6 +22,7 @@ import fg.expandablerecyclerview.view.BaseViewHolder;
 public abstract class AbstractAdapter extends RecyclerView.Adapter implements AbstractAdapterView.ExpandCollapseListener {
 
     AdapterItemUtil adapterItemUtil = new AdapterItemUtil();
+    ItemTouchHelper itemTouchHelper;
     //显示的数据集
     private List<ExpandableBean> mDataList;
     private List<ExpandableBean> mDataSource;
@@ -215,4 +219,28 @@ public abstract class AbstractAdapter extends RecyclerView.Adapter implements Ab
         }
     }
 
+    public void attachToRecyclerView(RecyclerView mRecyclerView) {
+        itemTouchHelper = new ItemTouchHelper(new ItemTouchHelperCallback());
+        itemTouchHelper.attachToRecyclerView(mRecyclerView);
+    }
+
+    public ItemTouchHelper getItemTouchHelper() {
+        return itemTouchHelper;
+    }
+
+    public void move(int fromPosition, int toPosition) {
+        ExpandableBean fromBean = mDataList.get(fromPosition);
+        ExpandableBean toBean = mDataList.get(toPosition);
+        remove(fromBean);
+        ExpandableBean parent = toBean.getParent();
+        int index = parent.getExpandableItemList().indexOf(toBean);
+        index = fromPosition < toPosition ? index + 1 : index;
+        add(index, fromBean);
+
+
+        Log.e("move","move fromPosition:"+fromPosition);
+        Log.e("move","move toPosition:"+toPosition);
+        Log.e("move","move mDataList:"+Arrays.toString(mDataList.toArray()));
+        Log.e("move","move mDataSource:"+Arrays.toString(mDataSource.get(0).getExpandableItemList().toArray()));
+    }
 }

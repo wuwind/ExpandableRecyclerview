@@ -15,4 +15,9 @@ public class ModeItem extends ExpandableBean<ModeItemView> {
     public List<? extends ExpandableBean> getExpandableItemList() {
         return null;
     }
+
+    @Override
+    public String toString() {
+        return name+"\n";
+    }
 }
