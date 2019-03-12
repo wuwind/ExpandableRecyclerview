@@ -1,5 +1,7 @@
 package fg.toutiao.view;
 
+import android.content.Context;
+import android.os.Vibrator;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -44,6 +46,7 @@ public class ModeItemView extends AbstractAdapterView<ModeItem> {
                     return;
                 int index = 0;
                 int fromPosition;
+                //移回
                 if (data.getParent() == datas.get(0)) {
                     if(data.getPreParent() == null)
                         return;
@@ -57,14 +60,18 @@ public class ModeItemView extends AbstractAdapterView<ModeItem> {
                 int toPosition = getAdapter().add(index, data);
                 getAdapter().notifyItemMoved(fromPosition, toPosition);
                 getAdapter().notifyItemChanged(toPosition);
+//                getAdapter().notifyItemInserted(toPosition);
             }
         });
 
         root.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                if(!isFix())
+                if(!isFix()) {
+                    Vibrator vibrator = (Vibrator) v.getContext().getSystemService(Context.VIBRATOR_SERVICE);
+                    vibrator.vibrate(1000);
                     getAdapter().getItemTouchHelper().startDrag(getViewHolder());
+                }
                 return false;
             }
         });
@@ -86,3 +93,6 @@ public class ModeItemView extends AbstractAdapterView<ModeItem> {
     }
 
 }
+
+
+

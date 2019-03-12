@@ -70,7 +70,7 @@ public class ItemTouchHelperCallback extends ItemTouchHelper.Callback {
         super.clearView(recyclerView, viewHolder);
         Log.e(TAG, "clearView()");
         viewHolder.itemView.setBackgroundColor(0);
-        if (toPosition == mFromPosition)
+        if (mFromPosition <0 || toPosition == mFromPosition)
             return;
         RecyclerView.Adapter adapter = recyclerView.getAdapter();
         if (adapter instanceof AbstractAdapter) {

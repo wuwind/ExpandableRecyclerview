@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
         mode.name = "快捷方式";
         mode.tag = "拖拽可以排序";
         mode.shortCut = true;
-        for (int i = 0; i < 6; i++) {
+        for (int i = 0; i < 2; i++) {
             ModeItem d = new ModeItem();
             d.name = "快捷"+i;
             d.setParent(mode);
@@ -36,17 +36,17 @@ public class MainActivity extends AppCompatActivity {
         }
         modes.add(mode);
         Mode mode2 = new Mode();
-        mode2.name = "安防设置";
-        for (int i = 0; i < 15; i++) {
+        mode2.name = "客厅";
+        for (int i = 0; i < 5; i++) {
             ModeItem d = new ModeItem();
-            d.name = "安防设置"+i;
+            d.name = "客厅"+i;
             d.setParent(mode2);
             mode2.modeItems.add(d);
         }
         modes.add(mode2);
         Mode mode3 = new Mode();
-        mode3.name = "家居";
-        for (int i = 0; i < 25; i++) {
+        mode3.name = "卧室";
+        for (int i = 0; i < 8; i++) {
             ModeItem d = new ModeItem();
             d.name = "家居"+i;
             d.setParent(mode3);

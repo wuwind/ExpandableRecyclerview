@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import fg.expandablerecyclerview.model.ExpandableBean;
@@ -229,6 +228,8 @@ public abstract class AbstractAdapter extends RecyclerView.Adapter implements Ab
     }
 
     public void move(int fromPosition, int toPosition) {
+        Log.e("move", "move fromPosition:" + fromPosition);
+        Log.e("move", "move toPosition:" + toPosition);
         ExpandableBean fromBean = mDataList.get(fromPosition);
         ExpandableBean toBean = mDataList.get(toPosition);
         remove(fromBean);
@@ -238,9 +239,7 @@ public abstract class AbstractAdapter extends RecyclerView.Adapter implements Ab
         add(index, fromBean);
 
 
-        Log.e("move","move fromPosition:"+fromPosition);
-        Log.e("move","move toPosition:"+toPosition);
-        Log.e("move","move mDataList:"+Arrays.toString(mDataList.toArray()));
-        Log.e("move","move mDataSource:"+Arrays.toString(mDataSource.get(0).getExpandableItemList().toArray()));
+//        Log.e("move","move mDataList:"+Arrays.toString(mDataList.toArray()));
+//        Log.e("move","move mDataSource:"+Arrays.toString(mDataSource.get(0).getExpandableItemList().toArray()));
     }
 }
