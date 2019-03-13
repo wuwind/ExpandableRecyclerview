@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
         modes.add(mode);
         Mode mode2 = new Mode();
         mode2.name = "客厅";
+        mode2.setExpand(true);
         for (int i = 0; i < 5; i++) {
             ModeItem d = new ModeItem();
             d.name = "客厅"+i;

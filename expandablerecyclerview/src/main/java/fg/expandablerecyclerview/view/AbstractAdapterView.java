@@ -13,7 +13,6 @@ import fg.expandablerecyclerview.model.ExpandableBean;
 public abstract class AbstractAdapterView<T extends ExpandableBean> {
 
     public RecyclerView.ViewHolder viewHolder;
-    private List<ExpandableBean> datas;
     private T expandableItem;
     private ExpandCollapseListener expandCollapseListener;
     private AbstractAdapter adapter;
@@ -67,18 +66,19 @@ public abstract class AbstractAdapterView<T extends ExpandableBean> {
 
     protected void collapseView() {
         if (null != expandCollapseListener) {
-            expandCollapseListener.onCollapsed(expandableItem.getPosition());
+            int pos = adapter.getDataList().indexOf(expandableItem);
+            expandCollapseListener.onCollapsed(pos);
         }
     }
 
     protected void expandView() {
         if (null != expandCollapseListener) {
-            expandCollapseListener.onExpanded(expandableItem.getPosition());
+            int pos = adapter.getDataList().indexOf(expandableItem);
+            expandCollapseListener.onExpanded(pos);
         }
     }
 
-    public void onUpdateViews(List<ExpandableBean> datas, T data, int position) {
-        this.datas = datas;
+    public void onUpdateViews(T data, int position) {
         this.expandableItem = data;
         this.expandableItem.setPosition(position);
         onUpdateViews(expandableItem);
@@ -87,7 +87,7 @@ public abstract class AbstractAdapterView<T extends ExpandableBean> {
     public abstract void onUpdateViews(T model);
 
     public List<ExpandableBean> getDatas() {
-        return datas;
+        return adapter.getDataSource();
     }
 
     public void setPosition(int position) {

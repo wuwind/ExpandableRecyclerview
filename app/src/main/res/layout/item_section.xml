@@ -27,5 +27,14 @@
         android:layout_toRightOf="@+id/tv_item_section_name"
         app:srcCompat="@android:drawable/ic_menu_close_clear_cancel" />
 
+    <ImageView
+        android:id="@+id/iv_checked"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_toRightOf="@+id/tv_item_section_name"
+        android:layout_alignBottom="@+id/tv_item_section_name"
+        android:layout_marginLeft="-10dp"
+        app:srcCompat="@android:drawable/checkbox_on_background" />
+
 
 </RelativeLayout>

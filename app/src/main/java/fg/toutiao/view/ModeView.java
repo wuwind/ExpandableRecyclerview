@@ -26,7 +26,13 @@ public class ModeView extends AbstractAdapterView<Mode> {
 
     @Override
     public void setOnClickListener(final View root) {
-//        super.setOnClickListener(root);
+        root.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if("客厅".equals(mName.getText().toString()))
+                    toggleExpandView();
+            }
+        });
     }
 
     @Override

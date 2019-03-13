@@ -2,7 +2,6 @@ package fg.expandablerecyclerview.adapter;
 
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
-import android.util.Log;
 import android.view.ViewGroup;
 
 import java.lang.reflect.ParameterizedType;
@@ -142,7 +141,7 @@ public abstract class AbstractAdapter extends RecyclerView.Adapter implements Ab
         ExpandableBean expandableItem = mDataList.get(position);
         AbstractAdapterView abstractAdapterView = rcvHolder.getItem();
         abstractAdapterView.setExpandCollapseListener(this);
-        rcvHolder.getItem().onUpdateViews(mDataSource, expandableItem, position);
+        rcvHolder.getItem().onUpdateViews(expandableItem, position);
     }
 
     //该方法只更改itemView的部分信息，不全部刷新
@@ -218,6 +217,14 @@ public abstract class AbstractAdapter extends RecyclerView.Adapter implements Ab
         }
     }
 
+    public List<ExpandableBean> getDataList() {
+        return mDataList;
+    }
+
+    public List<ExpandableBean> getDataSource() {
+        return mDataSource;
+    }
+
     public void attachToRecyclerView(RecyclerView mRecyclerView) {
         itemTouchHelper = new ItemTouchHelper(new ItemTouchHelperCallback());
         itemTouchHelper.attachToRecyclerView(mRecyclerView);
@@ -228,8 +235,8 @@ public abstract class AbstractAdapter extends RecyclerView.Adapter implements Ab
     }
 
     public void move(int fromPosition, int toPosition) {
-        Log.e("move", "move fromPosition:" + fromPosition);
-        Log.e("move", "move toPosition:" + toPosition);
+//        Log.e("move", "move fromPosition:" + fromPosition);
+//        Log.e("move", "move toPosition:" + toPosition);
         ExpandableBean fromBean = mDataList.get(fromPosition);
         ExpandableBean toBean = mDataList.get(toPosition);
         remove(fromBean);
