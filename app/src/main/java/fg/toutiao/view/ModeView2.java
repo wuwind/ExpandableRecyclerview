@@ -5,17 +5,17 @@ import android.widget.TextView;
 
 import fg.expandablerecyclerview.view.AbstractAdapterView;
 import fg.mylibrary.R;
-import fg.toutiao.model.Mode;
+import fg.toutiao.model.Mode2;
 
 
-public class ModeView extends AbstractAdapterView<Mode> {
+public class ModeView2 extends AbstractAdapterView<Mode2> {
 
     private TextView mName;
     private TextView tvTag;
 
     @Override
     public int getLayoutResId() {
-        return R.layout.item_chapter;
+        return R.layout.item_chapter2;
     }
 
     @Override
@@ -29,15 +29,14 @@ public class ModeView extends AbstractAdapterView<Mode> {
         root.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if("安防".equals(mName.getText().toString()))
-                    getAdapter().removeAndNotify(getData());
-//                    toggleExpandView();
+                if("客厅".equals(mName.getText().toString()))
+                    toggleExpandView();
             }
         });
     }
 
     @Override
-    public void onUpdateViews(Mode model) {
+    public void onUpdateViews(Mode2 model) {
         mName.setText(model.name);
         tvTag.setText(model.tag);
     }

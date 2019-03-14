@@ -3,6 +3,7 @@ package fg.toutiao;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
+import android.view.View;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +17,7 @@ import fg.toutiao.model.ModeItem;
 public class MainActivity extends AppCompatActivity {
 
     private ExpandableRecyclerView mRecyclerView;
-
+    Mode mode2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,9 +36,9 @@ public class MainActivity extends AppCompatActivity {
             mode.modeItems.add(d);
         }
         modes.add(mode);
-        Mode mode2 = new Mode();
-        mode2.name = "客厅";
-        mode2.setExpand(true);
+        mode2 = new Mode();
+//        mode2.setExpand(false);
+        mode2.name = "安防";
         for (int i = 0; i < 5; i++) {
             ModeItem d = new ModeItem();
             d.name = "客厅"+i;
@@ -66,9 +67,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         mRecyclerView.setLayoutManager(gridLayoutManager);
-        mRecyclerView.setDatas(modes, true);
+        mRecyclerView.setDatas(modes);
         mRecyclerView.getMAdapter().attachToRecyclerView(mRecyclerView);
     }
 
+    public void show(View v){
+        if(mRecyclerView.getMAdapter().getDataList().contains(mode2))
+            return;
+        mRecyclerView.getMAdapter().addAndNotify(1, mode2);
+    }
 
 }

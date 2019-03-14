@@ -6,7 +6,7 @@ public abstract class ExpandableBean<T> {
 
     private int position;
 
-    private boolean isExpand = false;
+    private boolean isExpand = true;
     private ExpandableBean parent;
     private ExpandableBean preParent;
 
