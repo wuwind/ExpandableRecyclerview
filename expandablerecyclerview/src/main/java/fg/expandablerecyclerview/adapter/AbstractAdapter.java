@@ -112,8 +112,11 @@ public abstract class AbstractAdapter extends RecyclerView.Adapter implements Ab
             List expandableItemList = parent.getExpandableItemList();
             index = (index < 0 || index > expandableItemList.size()) ? expandableItemList.size() : index;
             expandableItemList.add(index, bean);
-            pos = mDataList.indexOf(parent) + index + 1;
-            mDataList.add(pos, bean);
+            pos = mDataList.indexOf(parent);
+            if(pos >= 0){
+                pos = pos + index + 1;
+                mDataList.add(pos, bean);
+            }
         } else {
             if (index < 0 || index >= mDataSource.size()) {
                 index = mDataSource.size() - 1;

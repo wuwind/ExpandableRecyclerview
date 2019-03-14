@@ -86,6 +86,7 @@ public class ModeItemView extends AbstractAdapterView<ModeItem> {
         });
     }
 
+
     /**
      * 移动分类
      */
@@ -104,7 +105,7 @@ public class ModeItemView extends AbstractAdapterView<ModeItem> {
                 int index = 0;
                 int fromPosition;
                 if (data.getParent() == datas.get(0)) {
-                    if(data.getPreParent() == null)
+                    if (data.getPreParent() == null)
                         return;
                     fromPosition = getAdapter().remove(data);
                     data.setParent(data.getPreParent());
@@ -114,15 +115,20 @@ public class ModeItemView extends AbstractAdapterView<ModeItem> {
                     index = -1;
                 }
                 int toPosition = getAdapter().add(index, data);
-                getAdapter().notifyItemMoved(fromPosition, toPosition);
-                getAdapter().notifyItemChanged(toPosition);
+                if (toPosition >= 0) {
+                    getAdapter().notifyItemMoved(fromPosition, toPosition);
+                    getAdapter().notifyItemChanged(toPosition);
+                } else {
+                    getAdapter().notifyItemRemoved(fromPosition);
+                }
+
             }
         });
 
         root.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                if(!isFix())
+                if (!isFix())
                     getAdapter().getItemTouchHelper().startDrag(getViewHolder());
                 return false;
             }
