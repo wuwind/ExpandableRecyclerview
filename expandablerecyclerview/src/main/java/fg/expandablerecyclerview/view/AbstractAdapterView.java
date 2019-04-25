@@ -50,7 +50,6 @@ public abstract class AbstractAdapterView<T extends ExpandableBean> {
         root.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                toggleExpandView();
                 root.setSelected(getData().isExpand());
                 adapter.itemClick(expandableItem);
                 onItemClick(root);
@@ -76,7 +75,9 @@ public abstract class AbstractAdapterView<T extends ExpandableBean> {
         return expandableItem;
     }
 
-    public abstract void onItemClick(View v);
+    public void onItemClick(View v) {
+        toggleExpandView();
+    }
 
     public abstract boolean onItemLongClick(View v);
 

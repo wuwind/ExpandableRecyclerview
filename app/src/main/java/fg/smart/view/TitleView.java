@@ -26,9 +26,9 @@ public class TitleView extends AbstractAdapterView<TitleBean> {
 
     @Override
     public void onItemClick(View v) {
-        if("安防".equals(mName.getText().toString()))
+        if("安防".equals(mName.getText().toString())) {
             getAdapter().removeAndNotify(getData());
-//                    toggleExpandView();
+        }
     }
 
     @Override
