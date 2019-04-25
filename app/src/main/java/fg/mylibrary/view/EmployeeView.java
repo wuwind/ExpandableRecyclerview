@@ -22,6 +22,16 @@ public class EmployeeView extends AbstractAdapterView<Employee> {
     }
 
     @Override
+    public void onItemClick(View v) {
+
+    }
+
+    @Override
+    public boolean onItemLongClick(View v) {
+        return false;
+    }
+
+    @Override
     public void onUpdateViews(Employee model) {
         mName.setText(model.name);
     }

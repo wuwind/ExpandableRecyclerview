@@ -25,14 +25,14 @@ public class ModeView2 extends AbstractAdapterView<Mode2> {
     }
 
     @Override
-    public void setOnClickListener(final View root) {
-        root.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if("客厅".equals(mName.getText().toString()))
-                    toggleExpandView();
-            }
-        });
+    public void onItemClick(View v) {
+        if("客厅".equals(mName.getText().toString()))
+            toggleExpandView();
+    }
+
+    @Override
+    public boolean onItemLongClick(View v) {
+        return false;
     }
 
     @Override

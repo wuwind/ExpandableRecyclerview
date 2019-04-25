@@ -33,6 +33,16 @@ public class CompanyView extends AbstractAdapterView<Company> {
     }
 
     @Override
+    public void onItemClick(View v) {
+
+    }
+
+    @Override
+    public boolean onItemLongClick(View v) {
+        return false;
+    }
+
+    @Override
     public void onUpdateViews(Company model) {
         mName.setText(model.name);
         mArrow.setImageResource(model.isExpand() ? R.mipmap.ic_launcher_round : R.mipmap.ic_launcher);

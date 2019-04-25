@@ -13,7 +13,7 @@
         android:onClick="show"
         android:layout_height="wrap_content" />
 
-    <fg.expandablerecyclerview.view.ExpandableRecyclerView
+    <fg.smart.view.SmartQuickSettingView
         android:id="@+id/rv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

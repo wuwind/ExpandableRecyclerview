@@ -1,14 +1,14 @@
-package fg.toutiao.view;
+package fg.smart.view;
 
 import android.view.View;
 import android.widget.TextView;
 
 import fg.expandablerecyclerview.view.AbstractAdapterView;
 import fg.mylibrary.R;
-import fg.toutiao.model.Mode;
+import fg.smart.model.TitleBean;
 
 
-public class ModeView extends AbstractAdapterView<Mode> {
+public class TitleView extends AbstractAdapterView<TitleBean> {
 
     private TextView mName;
     private TextView tvTag;
@@ -37,7 +37,7 @@ public class ModeView extends AbstractAdapterView<Mode> {
     }
 
     @Override
-    public void onUpdateViews(Mode model) {
+    public void onUpdateViews(TitleBean model) {
         mName.setText(model.name);
         tvTag.setText(model.tag);
     }

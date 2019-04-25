@@ -2,13 +2,11 @@ package fg.expandablerecyclerview.adapter;
 
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
-import android.util.Log;
 import android.view.ViewGroup;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import fg.expandablerecyclerview.model.ExpandableBean;
@@ -28,6 +26,7 @@ public abstract class AbstractAdapter extends RecyclerView.Adapter implements Ab
     private List<ExpandableBean> mDataSource;
     private Class mItemType;
     private boolean isExpandAll;
+    private OnItemClick onItemClick;
 
     public AbstractAdapter(List<ExpandableBean> mDataList) {
         this(mDataList, false);
@@ -113,16 +112,21 @@ public abstract class AbstractAdapter extends RecyclerView.Adapter implements Ab
             index = (index < 0 || index > expandableItemList.size()) ? expandableItemList.size() : index;
             expandableItemList.add(index, bean);
             pos = mDataList.indexOf(parent);
-            if(pos >= 0){
+            if (pos >= 0) {
                 pos = pos + index + 1;
                 mDataList.add(pos, bean);
             }
         } else {
             if (index < 0 || index >= mDataSource.size()) {
-                index = mDataSource.size() - 1;
+                index = mDataSource.size();
             }
-            ExpandableBean expandableBean = mDataSource.get(index);
-            pos = mDataList.indexOf(expandableBean);
+            if(index > 0 ) {
+                ExpandableBean expandableBean = mDataSource.get(index-1);
+                List ex = expandableBean.getExpandableItemList();
+                pos = mDataList.indexOf(expandableBean)+ 1 + (ex == null ? 0 : expandableBean.getExpandableItemList().size());
+            } else {
+                pos = 0;
+            }
             mDataSource.add(index, bean);
             List<ExpandableBean> beans = new ArrayList<>();
             getExpandDatas(bean, beans);
@@ -251,6 +255,10 @@ public abstract class AbstractAdapter extends RecyclerView.Adapter implements Ab
         return mDataSource;
     }
 
+    public int getRealPosition(ExpandableBean bean) {
+        return mDataList.indexOf(bean);
+    }
+
     public void attachToRecyclerView(RecyclerView mRecyclerView) {
         itemTouchHelper = new ItemTouchHelper(new ItemTouchHelperCallback());
         itemTouchHelper.attachToRecyclerView(mRecyclerView);
@@ -261,17 +269,28 @@ public abstract class AbstractAdapter extends RecyclerView.Adapter implements Ab
     }
 
     public void move(int fromPosition, int toPosition) {
-//        Log.e("move", "move fromPosition:" + fromPosition);
-//        Log.e("move", "move toPosition:" + toPosition);
         ExpandableBean fromBean = mDataList.get(fromPosition);
         ExpandableBean toBean = mDataList.get(toPosition);
         remove(fromBean);
         ExpandableBean parent = toBean.getParent();
-        int index = parent.getExpandableItemList().indexOf(toBean);
+        int index = toPosition;
+        if (parent != null) {
+            index = parent.getExpandableItemList().indexOf(toBean);
+        }
         index = fromPosition < toPosition ? index + 1 : index;
         add(index, fromBean);
-        Log.e("move","move mDataList:"+Arrays.toString(mDataList.toArray()));
-        Log.e("move","move mDataSource:"+Arrays.toString(mDataSource.toArray()));
-        Log.e("move","move mDataSource:"+Arrays.toString(mDataSource.get(0).getExpandableItemList().toArray()));
+    }
+
+    public void setOnItemClick(OnItemClick onItemClick) {
+        this.onItemClick = onItemClick;
+    }
+
+    public void itemClick(ExpandableBean bean) {
+        if(null != onItemClick)
+            onItemClick.onClick(bean);
+    }
+
+    public interface OnItemClick {
+        void onClick(ExpandableBean bean);
     }
 }

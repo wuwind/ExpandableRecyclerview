@@ -5,7 +5,7 @@ import java.util.List;
 public abstract class ExpandableBean<T> {
 
     private int position;
-
+    public boolean isTitle;
     private boolean isExpand = true;
     private ExpandableBean parent;
     private ExpandableBean preParent;

@@ -33,6 +33,16 @@ public class DepartmentView extends AbstractAdapterView<Department> {
     }
 
     @Override
+    public void onItemClick(View v) {
+
+    }
+
+    @Override
+    public boolean onItemLongClick(View v) {
+        return false;
+    }
+
+    @Override
     public void onUpdateViews(Department model) {
         mName.setText(model.name);
     }

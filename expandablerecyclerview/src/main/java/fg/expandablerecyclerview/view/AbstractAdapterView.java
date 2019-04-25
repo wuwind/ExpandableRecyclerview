@@ -18,7 +18,11 @@ public abstract class AbstractAdapterView<T extends ExpandableBean> {
     private AbstractAdapter adapter;
 
     public boolean isFix() {
-        return true;
+        return false;
+    }
+
+    public void notifyItemChanged() {
+        adapter.notifyItemChanged(adapter.getRealPosition(expandableItem));
     }
 
     public RecyclerView.ViewHolder getViewHolder() {
@@ -42,12 +46,20 @@ public abstract class AbstractAdapterView<T extends ExpandableBean> {
 
     public abstract void onBindViews(final View root);
 
-    public void setOnClickListener(final View root) {
+    public final void setOnClickListener(final View root) {
         root.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 toggleExpandView();
                 root.setSelected(getData().isExpand());
+                adapter.itemClick(expandableItem);
+                onItemClick(root);
+            }
+        });
+        root.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                return onItemLongClick(v);
             }
         });
     }
@@ -63,6 +75,10 @@ public abstract class AbstractAdapterView<T extends ExpandableBean> {
     public T getData() {
         return expandableItem;
     }
+
+    public abstract void onItemClick(View v);
+
+    public abstract boolean onItemLongClick(View v);
 
     protected void collapseView() {
         if (null != expandCollapseListener) {

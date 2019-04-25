@@ -31,7 +31,7 @@ public class ItemTouchHelperCallback extends ItemTouchHelper.Callback {
 
     @Override
     public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
-        Log.e(TAG, "onMove()");
+
         if (viewHolder instanceof BaseViewHolder && ((BaseViewHolder) target).getItem().isFix()) {
             return false;
         }
@@ -40,6 +40,7 @@ public class ItemTouchHelperCallback extends ItemTouchHelper.Callback {
             mFromPosition = fromPosition;
         toPosition = target.getAdapterPosition();
         recyclerView.getAdapter().notifyItemMoved(fromPosition, toPosition);
+        Log.e(TAG, "onMove()4");
         return true;
     }
 
@@ -47,7 +48,13 @@ public class ItemTouchHelperCallback extends ItemTouchHelper.Callback {
     @Override
     public boolean isLongPressDragEnabled() {
         Log.e(TAG, "isLongPressDragEnabled()");
-        return false;
+//        return false;
+        return super.isLongPressDragEnabled();
+    }
+
+    @Override
+    public boolean isItemViewSwipeEnabled() {
+        return super.isItemViewSwipeEnabled();
     }
 
     @Override
