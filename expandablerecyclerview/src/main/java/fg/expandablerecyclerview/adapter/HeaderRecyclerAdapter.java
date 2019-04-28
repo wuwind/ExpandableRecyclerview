@@ -31,6 +31,13 @@ public abstract class HeaderRecyclerAdapter extends AbstractAdapter {
         notifyItemInserted(0);
     }
 
+    public void removeHeaderView() {
+        if(null != mHeaderView) {
+            mHeaderView = null;
+            notifyItemRemoved(0);
+        }
+    }
+
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, final int viewType) {
         if (mHeaderView != null && viewType == TYPE_HEADER)

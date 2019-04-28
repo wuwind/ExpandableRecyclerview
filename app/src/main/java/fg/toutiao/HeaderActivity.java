@@ -10,8 +10,8 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-import fg.expandablerecyclerview.base.HeaderRecyclerAdapter;
-import fg.expandablerecyclerview.base.RecyclerBaseHolder;
+import fg.base.HeaderRecyclerAdapter;
+import fg.base.RecyclerBaseHolder;
 import fg.mylibrary.R;
 import fg.toutiao.model.Mode;
 

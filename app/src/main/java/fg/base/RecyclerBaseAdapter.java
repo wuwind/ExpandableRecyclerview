@@ -1,4 +1,4 @@
-package fg.expandablerecyclerview.base;
+package fg.base;
 
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.Adapter;
