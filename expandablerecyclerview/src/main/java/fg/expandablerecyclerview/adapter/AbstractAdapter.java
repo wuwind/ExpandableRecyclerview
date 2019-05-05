@@ -120,10 +120,10 @@ public abstract class AbstractAdapter extends RecyclerView.Adapter implements Ab
             if (index < 0 || index >= mDataSource.size()) {
                 index = mDataSource.size();
             }
-            if(index > 0 ) {
-                ExpandableBean expandableBean = mDataSource.get(index-1);
+            if (index > 0 ) {
+                ExpandableBean expandableBean = mDataSource.get(index - 1);
                 List ex = expandableBean.getExpandableItemList();
-                pos = mDataList.indexOf(expandableBean)+ 1 + (ex == null ? 0 : expandableBean.getExpandableItemList().size());
+                pos = mDataList.indexOf(expandableBean) + 1 + (ex == null ? 0 : expandableBean.getExpandableItemList().size());
             } else {
                 pos = 0;
             }
@@ -190,6 +190,8 @@ public abstract class AbstractAdapter extends RecyclerView.Adapter implements Ab
 
     @Override
     public int getItemViewType(int position) {
+        if(null == mDataList)
+            return -1;
         Type genericSuperclass = mDataList.get(position).getClass().getGenericSuperclass();
         ParameterizedType parameterizedType = (ParameterizedType) genericSuperclass;
         Type[] actualTypeArguments = parameterizedType.getActualTypeArguments();
@@ -279,6 +281,9 @@ public abstract class AbstractAdapter extends RecyclerView.Adapter implements Ab
         }
         index = fromPosition < toPosition ? index + 1 : index;
         add(index, fromBean);
+        if (null != onItemClick) {
+            onItemClick.move(fromPosition, toPosition);
+        }
     }
 
     public void setOnItemClick(OnItemClick onItemClick) {
@@ -286,11 +291,13 @@ public abstract class AbstractAdapter extends RecyclerView.Adapter implements Ab
     }
 
     public void itemClick(ExpandableBean bean) {
-        if(null != onItemClick)
+        if (null != onItemClick)
             onItemClick.onClick(bean);
     }
 
     public interface OnItemClick {
         void onClick(ExpandableBean bean);
+
+        void move(int fromPosition, int toPosition);
     }
 }
