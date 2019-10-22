@@ -3,7 +3,6 @@ package fg.expandablerecyclerview.view;
 import android.content.Context;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SimpleItemAnimator;
 import android.util.AttributeSet;
 
 import java.util.List;
@@ -25,7 +24,7 @@ public class ExpandableRecyclerView extends RecyclerView {
 
     public ExpandableRecyclerView(Context context, @Nullable AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        ((SimpleItemAnimator)getItemAnimator()).setSupportsChangeAnimations(false);
+        getItemAnimator().setSupportsChangeAnimations(false);
     }
 
     public void setDatas(List<ExpandableBean> mDataList, boolean isExpandAll) {

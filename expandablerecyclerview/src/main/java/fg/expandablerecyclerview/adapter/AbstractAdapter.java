@@ -175,22 +175,22 @@ public abstract class AbstractAdapter extends RecyclerView.Adapter implements Ab
     }
 
     //该方法只更改itemView的部分信息，不全部刷新
-    @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position, List payloads) {
-        if (payloads.isEmpty()) {
-            super.onBindViewHolder(holder, position, payloads);
-        } else {
-            String str = (String) payloads.get(0);
-            if (str.equals("change_position")) {
-                BaseViewHolder rcvHolder = (BaseViewHolder) holder;
-                rcvHolder.getItem().setPosition(position);
-            }
-        }
-    }
+//    @Override
+//    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position, List payloads) {
+//        if (payloads.isEmpty()) {
+//            super.onBindViewHolder(holder, position, payloads);
+//        } else {
+//            String str = (String) payloads.get(0);
+//            if (str.equals("change_position")) {
+//                BaseViewHolder rcvHolder = (BaseViewHolder) holder;
+//                rcvHolder.getItem().setPosition(position);
+//            }
+//        }
+//    }
 
     @Override
     public int getItemViewType(int position) {
-        if(null == mDataList)
+        if(null == mDataList || position >= mDataList.size())
             return -1;
         Type genericSuperclass = mDataList.get(position).getClass().getGenericSuperclass();
         ParameterizedType parameterizedType = (ParameterizedType) genericSuperclass;
@@ -217,7 +217,7 @@ public abstract class AbstractAdapter extends RecyclerView.Adapter implements Ab
             return;
         mDataList.addAll(position + 1, expandableItemList);
         notifyItemRangeInserted(position + 1, expandableItemList.size());
-        notifyItemRangeChanged(position + 1, getItemCount(), "change_position");
+//        notifyItemRangeChanged(position + 1, getItemCount(), "change_position");
     }
 
     @Override
@@ -228,7 +228,7 @@ public abstract class AbstractAdapter extends RecyclerView.Adapter implements Ab
             return;
         mDataList.removeAll(removeItems);
         notifyItemRangeRemoved(position + 1, removeItems.size());
-        notifyItemRangeChanged(position + 1, getItemCount(), "change_position");
+//        notifyItemRangeChanged(position + 1, getItemCount(), "change_position");
     }
 
     private void getCollapseDatas(int position, List<ExpandableBean> items) {
@@ -290,13 +290,13 @@ public abstract class AbstractAdapter extends RecyclerView.Adapter implements Ab
         this.onItemClick = onItemClick;
     }
 
-    public void itemClick(ExpandableBean bean) {
+    public void itemClick(ExpandableBean bean, AbstractAdapterView view) {
         if (null != onItemClick)
-            onItemClick.onClick(bean);
+            onItemClick.onClick(bean, view);
     }
 
     public interface OnItemClick {
-        void onClick(ExpandableBean bean);
+        void onClick(ExpandableBean bean, AbstractAdapterView view);
 
         void move(int fromPosition, int toPosition);
     }
